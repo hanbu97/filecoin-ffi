@@ -14,6 +14,9 @@ edition = "2021"
 resolver = "2"
 publish = false
 
+[workspace]
+members = [".", "bellperson", "filecoin-proofs-api"]
+
 [lib]
 crate-type = ["rlib", "staticlib"]
 
@@ -31,12 +34,13 @@ rand = "0.8"
 rand_chacha = "0.3.1"
 rayon = "1.2.1"
 anyhow = "1.0.23"
-bellperson = { version = "0.21", default-features = false }
+# bellperson = { version = "0.21", default-features = false }
+bellperson = { git = "https://gitee.com/shenzhen-maike-storage/rust-fil-proofs-mkcc.git", branch = "opt4", package = "bellperson", default-features = false }
 serde_json = "1.0.46"
 memmap = "0.7"
 rust-gpu-tools = { version = "0.5", default-features = false }
-storage-proofs-porep = { version = "~11.1", default-features = false }
-fr32 = { version = "~4.1", default-features = false }
+storage-proofs-porep = { git = "https://gitee.com/shenzhen-maike-storage/rust-fil-proofs-mkcc.git", branch = "opt4", package = "storage-proofs-porep", default-features = false }
+fr32 = { git = "https://gitee.com/shenzhen-maike-storage/rust-fil-proofs-mkcc.git", branch = "opt4", package = "fr32", default-features = false }
 fvm = { version = "1.0.0-rc.3", default-features = false }
 fvm_ipld_car = "0.4.1"
 fvm_shared = "0.8.0"
@@ -55,6 +59,7 @@ futures = "0.3.5"
 safer-ffi = { version = "0.0.7", features = ["proc_macros"] }
 
 [dependencies.filecoin-proofs-api]
+path = "./filecoin-proofs-api"
 package = "filecoin-proofs-api"
 version = "11.1"
 default-features = false
@@ -63,7 +68,7 @@ default-features = false
 tempfile = "3.0.8"
 
 [features]
-default = ["opencl", "multicore-sdr" ]
+default = ["cuda", "multicore-sdr" ]
 blst-portable = ["bls-signatures/blst-portable", "blstrs/portable"]
 opencl = ["filecoin-proofs-api/opencl", "bellperson/opencl", "storage-proofs-porep/opencl", "rust-gpu-tools/opencl", "fvm/opencl"]
 cuda = ["filecoin-proofs-api/cuda", "bellperson/cuda", "storage-proofs-porep/cuda", "rust-gpu-tools/cuda", "fvm/cuda"]
